@@ -47,6 +47,7 @@ Just add a `benchmark*` method in your `TestCase` class
 ```php
 class MyTest extends \PHPUnit_Framework_TestCase
 {
+    // Executed only by php-bench
     public function benchmarkMyAppMethod($b)
     {
         for ($i<0; $i<$b->times(); $i++) {
@@ -57,6 +58,7 @@ class MyTest extends \PHPUnit_Framework_TestCase
     public function testMyAppMethod()
     {
         // ...
+        $this->assertEquals(...);
     }
 }
 ```

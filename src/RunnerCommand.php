@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Finder\Finder;
+use Bench\Search;
 
 class RunnerCommand extends Command
 {
@@ -38,7 +39,9 @@ class RunnerCommand extends Command
             $files->in($path);
         }
 
-        $benchRunner = new BenchRunner($this->finder, $output);
+        $extractor = new MethodExtractor($this->finder);
+
+        $benchRunner = new BenchRunner($extractor, $output);
         $benchRunner->runBenchmarks(new PrintResult());
     }
 }
