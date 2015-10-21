@@ -3,8 +3,8 @@ namespace Bench;
 
 use ReflectionClass;
 use ReflectionMethod;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 
 class BenchRunner
 {
@@ -32,42 +32,12 @@ class BenchRunner
                 if (strpos($name, "benchmark") === 0) {
                     $instance = new $class;
 
-                    $start = microtime(true);
-                    call_user_func([$instance, $name], []);
-                    $end = microtime(true);
+                    $b = new B();
+                    call_user_func([$instance, $name], $b);
 
-                    $duration = $end-$start;
-
-                    $times = 1;
-                    while ($duration < 2) {
-                        $times *= 2;
-                        $duration = ($end-$start) * $times;
-                    }
-
-                    $mean = ($end-$start);
-                    for ($i=0; $i<$times; $i++) {
-                        $start = microtime(true);
-                        call_user_func([$instance, $name], []);
-                        $end = microtime(true);
-
-                        $mean += ($end-$start);
-                        $mean /= 2;
-                    }
-
-                    $this->output->writeln(sprintf("%-59s %10d %s", $class."::".$name, $times, $this->getRescaledTime($mean)));
+                    $this->output->writeln(sprintf("%-59s %10d %s", $class."::".$name, $b->getTimes(), $b));
                 }
             }
-        }
-    }
-
-    private function getRescaledTime($seconds)
-    {
-        if (($seconds * 1e6) < 1000) {
-            return number_format($seconds * 1e6, 3) . " us/op";
-        } else if (($seconds * 1e3) < 1000) {
-            return number_format($seconds * 1e3, 3) . " ms/op";
-        } else {
-            return number_format($seconds, 3) . " s/op";
         }
     }
 

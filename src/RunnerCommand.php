@@ -10,6 +10,15 @@ use Symfony\Component\Finder\Finder;
 
 class RunnerCommand extends Command
 {
+    private $finder;
+
+    public function __construct(Finder $finder)
+    {
+        parent::__construct();
+
+        $this->finder = $finder;
+    }
+
     public function configure()
     {
         $this->setName("run")
@@ -23,15 +32,13 @@ class RunnerCommand extends Command
         $paths = $input->getArgument('paths');
         $configuration = $input->getOption("configuration");
 
-        $finder = new Finder();
-
-        $files = $finder->files();
+        $files = $this->finder->files();
 
         foreach ($paths as $path) {
             $files->in($path);
         }
 
-        $benchRunner = new BenchRunner($finder, $output);
+        $benchRunner = new BenchRunner($this->finder, $output);
         $benchRunner->runBenchmarks();
     }
 }

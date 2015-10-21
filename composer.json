@@ -1,4 +1,17 @@
 {
+  "name": "wdalmut/bench",
+  "description": "Benchmark your application methods in a simple way",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["benchmark", "bench", "phpunit", "testing"],
+  "authors": [
+    {
+      "name": "Walter Dal Mut",
+      "email": "walter.dalmut@gmail.com",
+      "homepage": "http://walterdalmut.com/",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "phpunit/phpunit": "~5",
     "symfony/console": "~2|~3",
