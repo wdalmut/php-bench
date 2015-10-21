@@ -39,6 +39,6 @@ class RunnerCommand extends Command
         }
 
         $benchRunner = new BenchRunner($this->finder, $output);
-        $benchRunner->runBenchmarks();
+        $benchRunner->runBenchmarks(new PrintResult());
     }
 }

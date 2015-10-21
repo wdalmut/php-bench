@@ -17,6 +17,6 @@ class BenchRunnerTest extends PHPUnit_Framework_TestCase
         $output->writeln(Argument::Any())->shouldBeCalled();
 
         $sut = new BenchRunner($finder->reveal(), $output->reveal());
-        $sut->runBenchmarks();
+        $sut->runBenchmarks(new PrintResult());
     }
 }

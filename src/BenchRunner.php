@@ -17,7 +17,7 @@ class BenchRunner
         $this->output = $output;
     }
 
-    public function runBenchmarks()
+    public function runBenchmarks(PrintResult $printResult)
     {
         $classes = $this->getAvailableClasses();
 
@@ -32,10 +32,10 @@ class BenchRunner
                 if (strpos($name, "benchmark") === 0) {
                     $instance = new $class;
 
-                    $b = new B();
+                    $b = new B("{$class}::{$name}");
                     call_user_func([$instance, $name], $b);
 
-                    $this->output->writeln(sprintf("%-59s %10d %s", $class."::".$name, $b->getTimes(), $b));
+                    $this->output->writeln((string)$printResult->withB($b));
                 }
             }
         }

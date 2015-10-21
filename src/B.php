@@ -12,14 +12,23 @@ class B
     private $start;
     private $end;
 
-    public function __construct()
+    private $functionName;
+
+    public function __construct($functionName)
     {
+        $this->functionName = $functionName;
+
         $this->duration = 0;
         $this->count = 0;
         $this->times =  2;
 
         $this->start = 0;
         $this->end = 0;
+    }
+
+    public function getFunctionName()
+    {
+        return $this->functionName;
     }
 
     public function getTimes()
