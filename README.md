@@ -21,7 +21,6 @@ Inspired by Golang benchmark library
  **TODO**
 
  - [ ] compute library overhead and recalibrate the result
- - [ ] clean things up
 
 ## Declare a bench method
 
