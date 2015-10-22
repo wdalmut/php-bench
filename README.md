@@ -11,7 +11,7 @@ Install the bench library
 ```json
 {
     "require-dev": {
-        "wdalmut/bench": "*"
+        "wdalmut/php-bench": "*"
     }
 }
 ```
