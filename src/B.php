@@ -72,6 +72,12 @@ class B
         return $this->times;
     }
 
+    public function calibrateWith(B $b)
+    {
+        $this->duration = $this->duration - $b->getDuration();
+        return $this;
+    }
+
     public function __toString()
     {
         if (($this->getDuration() * 1e6) < 1000) {

@@ -18,10 +18,6 @@ Install the bench library
 
 Inspired by Golang benchmark library
 
- **TODO**
-
- - [ ] compute library overhead and recalibrate the result
-
 ## Declare a bench method
 
 Just create a method starting with the `benchmark` keyword:
