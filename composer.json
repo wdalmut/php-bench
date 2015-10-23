@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "phpunit/phpunit": "~5",
+    "phpunit/phpunit": "~4",
     "symfony/console": "~2|~3",
     "symfony/finder": "~2|~3"
   },
