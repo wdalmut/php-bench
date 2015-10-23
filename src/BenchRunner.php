@@ -4,6 +4,7 @@ namespace Bench;
 use Bench\Search;
 use ReflectionClass;
 use ReflectionMethod;
+use Bench\IterationStrategy;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BenchRunner
@@ -11,11 +12,13 @@ class BenchRunner
     const CALIBRATE = 1000;
 
     private $extractor;
+    private $strategy;
     private $output;
 
-    public function __construct(MethodExtractor $extractor, OutputInterface $output)
+    public function __construct(MethodExtractor $extractor, IterationStrategy $strategy,  OutputInterface $output)
     {
         $this->extractor = $extractor;
+        $this->strategy = $strategy;
         $this->output = $output;
     }
 
@@ -25,7 +28,7 @@ class BenchRunner
 
         foreach ($callables as $element) {
             list($name, $callable) = $element;
-            $b = new B($name);
+            $b = new B($name, $this->strategy);
             call_user_func($callable, $b);
 
             $calibration = $this->getAvgCalibration();
@@ -37,7 +40,7 @@ class BenchRunner
 
     private function getAvgCalibration()
     {
-        $b = new B("calibration");
+        $b = new B("calibration", $this->strategy);
         for ($i=0; $i<self::CALIBRATE; $i++) {
             // Calibration stub
         }

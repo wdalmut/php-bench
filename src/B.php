@@ -13,8 +13,9 @@ class B
     private $end;
 
     private $functionName;
+    private $strategy;
 
-    public function __construct($functionName)
+    public function __construct($functionName, IterationStrategy $strategy)
     {
         $this->functionName = $functionName;
 
@@ -24,6 +25,8 @@ class B
 
         $this->start = 0;
         $this->end = 0;
+
+        $this->strategy = $strategy;
     }
 
     public function getFunctionName()
@@ -33,7 +36,7 @@ class B
 
     public function getTimes()
     {
-        return $this->times - 2;
+        return $this->times;
     }
 
     public function getDuration()
@@ -59,14 +62,7 @@ class B
         ++$this->count;
 
         if ($this->count == 2) {
-            $times = 1;
-            $duration = $this->duration;
-            while ($duration < 2) {
-                $times *= 2;
-                $duration = ($this->end-$this->start) * $times;
-            }
-
-            $this->times = $times;
+            $this->times = $this->strategy->getIterateCount($this->start, $this->end);
         }
 
         return $this->times;
@@ -76,18 +72,5 @@ class B
     {
         $this->duration = $this->duration - $b->getDuration();
         return $this;
-    }
-
-    public function __toString()
-    {
-        if (($this->getDuration() * 1e6) < 1000) {
-            return (string)number_format($this->getDuration() * 1e6, 3) . " us/op";
-        } else if (($this->getDuration() * 1e3) < 1000) {
-            return (string)number_format($this->getDuration() * 1e3, 3) . " ms/op";
-        } else {
-            return (string)number_format($this->getDuration(), 3) . " s/op";
-        }
-
-        return "nd";
     }
 }

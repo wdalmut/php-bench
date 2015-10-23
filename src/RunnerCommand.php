@@ -39,9 +39,9 @@ class RunnerCommand extends Command
             $files->in($path);
         }
 
+        $strategy = new IterationStrategy();
         $extractor = new MethodExtractor($this->finder);
-
-        $benchRunner = new BenchRunner($extractor, $output);
+        $benchRunner = new BenchRunner($extractor, $strategy, $output);
         $benchRunner->runBenchmarks(new PrintResult());
     }
 }
