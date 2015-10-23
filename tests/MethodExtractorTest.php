@@ -34,7 +34,7 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
         $class = new ReflectionClass($class);
         $callables = $extractor->getBenchmarksFrom($class->getMethods());
 
-        $this->assertCount(2, $callables);
+        $this->assertCount(3, $callables);
         $this->assertEquals("benchmarkTestCase", $callables[0]);
         $this->assertEquals("benchmarkTestCaseWithALongerDescription", $callables[1]);
     }
@@ -51,7 +51,7 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
         $class = new \Sut();
         $callables = $extractor->extractFrom($class);
 
-        $this->assertCount(2, $callables);
+        $this->assertCount(3, $callables);
         list($key, $callable) = $callables[0];
         $this->assertEquals('Sut::benchmarkTestCase', $key);
         $this->assertInstanceOf("Sut", $callable[0]);
@@ -60,6 +60,10 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Sut::benchmarkTestCaseWithALongerDescription', $key);
         $this->assertInstanceOf("Sut", $callable[0]);
         $this->assertEquals("benchmarkTestCaseWithALongerDescription", $callable[1]);
+        list($key, $callable) = $callables[2];
+        $this->assertEquals('Sut::withDocComment', $key);
+        $this->assertInstanceOf("Sut", $callable[0]);
+        $this->assertEquals("withDocComment", $callable[1]);
     }
 
     public function testCallables()
@@ -71,7 +75,6 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
         $extractor = new MethodExtractor($finder->reveal());
         $callables = $extractor->getCallables();
 
-        $this->assertCount(2, $callables);
+        $this->assertCount(3, $callables);
     }
-
 }
