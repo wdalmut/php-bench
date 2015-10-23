@@ -50,7 +50,7 @@ class MethodExtractor
         $callables = $this->getBenchmarksFrom($methods);
 
         array_walk($callables, function(&$value) use ($class, $reflectedClass) {
-            $value = [$reflectedClass->getName() . '::' . $value, [$class, $value]];
+            $value = [$reflectedClass->getName() . '::' . $value, [new $class, $value]];
         });
 
         return $callables;

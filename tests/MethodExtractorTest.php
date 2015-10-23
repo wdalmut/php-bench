@@ -54,11 +54,11 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $callables);
         list($key, $callable) = $callables[0];
         $this->assertEquals('Sut::benchmarkTestCase', $key);
-        $this->assertSame($class, $callable[0]);
+        $this->assertInstanceOf("Sut", $callable[0]);
         $this->assertEquals("benchmarkTestCase", $callable[1]);
         list($key, $callable) = $callables[1];
         $this->assertEquals('Sut::benchmarkTestCaseWithALongerDescription', $key);
-        $this->assertSame($class, $callable[0]);
+        $this->assertInstanceOf("Sut", $callable[0]);
         $this->assertEquals("benchmarkTestCaseWithALongerDescription", $callable[1]);
     }
 
