@@ -1,5 +1,7 @@
 # Benchmark your class methods or functions
 
+[![Build Status](https://travis-ci.org/wdalmut/php-bench.svg?branch=master)](https://travis-ci.org/wdalmut/php-bench)
+
 Just a simple way to benchmark your class methods or functions.
 
 ```sh
