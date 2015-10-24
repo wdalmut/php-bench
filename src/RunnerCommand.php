@@ -24,14 +24,12 @@ class RunnerCommand extends Command
     {
         $this->setName("run")
             ->setDescription("Run benchmarks")
-            ->addOption("configuration", "c", InputOption::VALUE_NONE, 'Configuration file')
             ->addArgument('paths', InputArgument::IS_ARRAY, 'Search for benchmarks in different paths');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $paths = $input->getArgument('paths');
-        $configuration = $input->getOption("configuration");
 
         $files = $this->finder->files();
 
