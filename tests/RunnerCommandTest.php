@@ -20,7 +20,11 @@ class RunnerCommandTest extends \PHPUnit_Framework_TestCase
 
         $command = $application->find('run');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array('paths' => [__DIR__]));
+
+        $commandTester->execute([
+            'paths' => [__DIR__],
+            "--min-duration" => 0.001,
+        ]);
 
         $this->assertRegExp('/^Sut::/i', $commandTester->getDisplay());
     }

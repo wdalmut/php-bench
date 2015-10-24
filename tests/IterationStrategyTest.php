@@ -11,7 +11,7 @@ class IterationStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testRiseTestIterationUpToALowerBound()
     {
-        $iteration = new IterationStrategy();
-        $this->assertEquals(IterationStrategy::LOWER_BOUND, $iteration->getIterateCount(0, 1));
+        $iteration = new IterationStrategy(2, 10);
+        $this->assertEquals(10, $iteration->getIterateCount(0, 1));
     }
 }

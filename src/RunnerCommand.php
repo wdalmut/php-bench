@@ -24,12 +24,16 @@ class RunnerCommand extends Command
     {
         $this->setName("run")
             ->setDescription("Run benchmarks")
+            ->addOption("min-duration", "md", InputOption::VALUE_OPTIONAL, "How log a benchmark should run in seconds", 2)
+            ->addOption("min-times", "mt", InputOption::VALUE_OPTIONAL, "The minimum count of loops that a benchmark should run", 10)
             ->addArgument('paths', InputArgument::IS_ARRAY, 'Search for benchmarks in different paths');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $paths = $input->getArgument('paths');
+        $minDuration = $input->getOption("min-duration");
+        $minTimes = $input->getOption("min-times");
 
         $files = $this->finder->files();
 
@@ -37,7 +41,7 @@ class RunnerCommand extends Command
             $files->in($path);
         }
 
-        $strategy = new IterationStrategy();
+        $strategy = new IterationStrategy($minDuration, $minTimes);
         $extractor = new MethodExtractor($this->finder->getIterator());
         $benchRunner = new BenchRunner($extractor, $strategy, $output);
         $benchRunner->runBenchmarks(new PrintResult());
