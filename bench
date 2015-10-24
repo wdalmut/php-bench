@@ -5,7 +5,11 @@ use Bench\RunnerCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Finder;
 
-require_once __DIR__ . '/vendor/autoload.php';
+foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+    if (file_exists($file)) {
+        require_once $file;
+    }
+}
 
 $application = new Application();
 $application->add(new RunnerCommand(new Finder()));
