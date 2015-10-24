@@ -8,12 +8,10 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
 {
     public function testExtractNothing()
     {
-        $finder = $this->prophesize("Symfony\Component\Finder\Finder");
         $iterator = new ArrayIterator([]);
-        $finder->getIterator()->willReturn($iterator);;
 
         require __DIR__ . '/test.php';
-        $extractor = new MethodExtractor($finder->reveal());
+        $extractor = new MethodExtractor($iterator);
         $class = new ReflectionClass($this);
         $callables = $extractor->getBenchmarksFrom($class->getMethods());
 
@@ -23,12 +21,9 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
     public function testExtractBenchmarks()
     {
         require __DIR__ . '/test.php';
-
-        $finder = $this->prophesize("Symfony\Component\Finder\Finder");
         $iterator = new ArrayIterator([]);
-        $finder->getIterator()->willReturn($iterator);;
 
-        $extractor = new MethodExtractor($finder->reveal());
+        $extractor = new MethodExtractor($iterator);
         $class = new \Sut();
 
         $class = new ReflectionClass($class);
@@ -41,12 +36,10 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
 
     public function testExtractFromClass()
     {
-        $finder = $this->prophesize("Symfony\Component\Finder\Finder");
         $iterator = new ArrayIterator([]);
-        $finder->getIterator()->willReturn($iterator);;
 
         require __DIR__ . '/test.php';
-        $extractor = new MethodExtractor($finder->reveal());
+        $extractor = new MethodExtractor($iterator);
 
         $class = new \Sut();
         $callables = $extractor->extractFrom($class);
@@ -68,11 +61,9 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
 
     public function testCallables()
     {
-        $finder = $this->prophesize("Symfony\Component\Finder\Finder");
         $iterator = new ArrayIterator([__DIR__ . '/test.php']);
-        $finder->getIterator()->willReturn($iterator);;
 
-        $extractor = new MethodExtractor($finder->reveal());
+        $extractor = new MethodExtractor($iterator);
         $callables = $extractor->getCallables();
 
         $this->assertCount(3, $callables);

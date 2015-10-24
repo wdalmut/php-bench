@@ -1,17 +1,18 @@
 <?php
 namespace Bench;
 
+use Iterator;
 use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Component\Finder\Finder;
 
 class MethodExtractor
 {
-    private $finder;
+    private $files;
 
-    public function __construct(Finder $finder)
+    public function __construct(Iterator $files)
     {
-        $this->finder = $finder;
+        $this->files = $files;
     }
 
     public function getCallables()
@@ -29,7 +30,7 @@ class MethodExtractor
     private function getAvailableClasses()
     {
         $foundClasses = [];
-        foreach ($this->finder as $file) {
+        foreach ($this->files as $file) {
             $classes = get_declared_classes();
             include_once $file;
             $newClasses = array_diff(get_declared_classes(), $classes);

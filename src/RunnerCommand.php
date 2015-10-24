@@ -38,7 +38,7 @@ class RunnerCommand extends Command
         }
 
         $strategy = new IterationStrategy();
-        $extractor = new MethodExtractor($this->finder);
+        $extractor = new MethodExtractor($this->finder->getIterator());
         $benchRunner = new BenchRunner($extractor, $strategy, $output);
         $benchRunner->runBenchmarks(new PrintResult());
     }
