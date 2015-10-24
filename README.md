@@ -8,28 +8,36 @@ Just a simple way to benchmark your class methods or functions.
 ./vendor/bin/bench run tests/
 ```
 
-Install the bench library
+or with different paths
 
-```json
-{
-    "require-dev": {
-        "wdalmut/php-bench": "*"
-    }
-}
+```sh
+./vendor/bin/bench run tests/ benchs/
 ```
-
-Inspired by Golang benchmark library
 
 ## Declare a bench method
 
-Just create a method starting with the `benchmark` keyword:
+Just create a method in a class starting with the `benchmark` keyword or use a
+simple `@benchmark` annotation in your doc-block.
 
 ```php
-// Somewhere in your code
-public function benchmarkCaseOne($b)
+class MyClass
 {
-    for ($i=0; $i<$b->times(); $i++) {
-        sprintf("%s", "hello");
+    ...
+
+    public function benchmarkUsingTheMethodName($b)
+    {
+        for ($i=0; $i<$b->times(); $i++) {
+            my_project_function("%s", "hello");
+        }
+    }
+
+    /**
+     * @benchmark
+     */
+    public function this_bench_instead_use_the_annotation($b) {
+        for ($i=0; $i<$b->times(); $i++) {
+            $myObj->slowMethod("stub");
+        }
     }
 }
 ```
@@ -39,7 +47,7 @@ number of iterations that your bench function should run.
 
 ## PHPUnit integration
 
-Just add a `benchmark*` method in your `TestCase` class
+Just add a `benchmark` method in your testcases.
 
 ```php
 class MyTest extends \PHPUnit_Framework_TestCase
@@ -60,15 +68,17 @@ class MyTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-## Using Annotations
+## Install with composer
 
-In order to allow users to setup a more personal benchmark method name, you can also
-declare your own benchmarks functions using annotations:
+You can use composer in order to get this library locally
 
-```php
-/**
- * @benchmark
- */
-public function is_this_function_super_slow($b) {}
+```json
+{
+    "require-dev": {
+        "wdalmut/php-bench": "*"
+    }
+}
 ```
+
+Inspired by Golang benchmark library
 
