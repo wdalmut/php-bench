@@ -68,4 +68,14 @@ class MethodExtractorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(3, $callables);
     }
+
+    public function testSkipNotPHPFiles()
+    {
+        $iterator = new ArrayIterator([__DIR__ . '/../README.md']);
+
+        $extractor = new MethodExtractor($iterator);
+        $callables = $extractor->getCallables();
+
+        $this->assertCount(0, $callables);
+    }
 }

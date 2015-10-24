@@ -32,11 +32,13 @@ class MethodExtractor
         $foundClasses = [];
         foreach ($this->files as $file) {
             $classes = get_declared_classes();
-            include_once $file;
-            $newClasses = array_diff(get_declared_classes(), $classes);
+            if (pathinfo($file, PATHINFO_EXTENSION) == "php") {
+                include_once $file;
+                $newClasses = array_diff(get_declared_classes(), $classes);
 
-            if ($newClasses) {
-                $foundClasses = array_merge($newClasses, $foundClasses);
+                if ($newClasses) {
+                    $foundClasses = array_merge($newClasses, $foundClasses);
+                }
             }
         }
 
