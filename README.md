@@ -60,3 +60,15 @@ class MyTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
+## Using Annotations
+
+In order to allow users to setup a more personal benchmark method name, you can also
+declare your own benchmarks functions using annotations:
+
+```php
+/**
+ * @benchmark
+ */
+public function is_this_function_super_slow($b) {}
+```
+

@@ -61,13 +61,23 @@ class MethodExtractor
         $callables = [];
 
         foreach ($methods as $method) {
-            $name = $method->getName();
-
-            if (strpos($name, "benchmark") === 0) {
-                $callables[] = $name;
+            if ($this->isBenchmark($method)) {
+                $callables[] = $method->getName();
             }
         }
 
         return $callables;
+    }
+
+    private function isBenchmark(ReflectionMethod $method)
+    {
+        $isBenchmark = false;
+        foreach ([$method->getName(), $method->getDocComment()] as $thing) {
+            if (preg_match("/@benchmark[ ]*\n|^benchmark[a-zA-Z0-9]+/i", $thing)) {
+                $isBenchmark = true;
+            }
+        }
+
+        return $isBenchmark;
     }
 }

@@ -19,7 +19,14 @@ class Sut
     /**
      * @benchmark
      */
-    public function something()
+    public function withDocComment($b)
+    {
+        for ($i=0; $i<$b->times(); $i++) {
+            usleep(1e2);
+        }
+    }
+
+    public function thisIsNotABenchmark()
     {
 
     }
